@@ -1,0 +1,33 @@
+1. Regular Expression --> [0-9]
+2. Cucumber Expression -- > {String}
+cannot mix both in single method
+([0-9]) -- > capture group
+([0-9]+) appear more than once
+{4} 0000,9999,1212,3456,1234,8888 (4 digits every time ; n=4)
+* zero or more
+? zero or once
+\d -- numeric digits
+(\d+)
+https://www.regular-expressions.info/refshorthand.html
+https://www.oreilly.com/library/view/mastering-windows-powershell/9781787126305/bdef0070-e172-47ee-b091-3b49dbcedc39.xhtml
+
+tags can be like "@a1 or @a2" - run both
+if "@a and @a2" - will run if any method has both
+if "not @a1"
+mvn test -Dcucumber.filter.tags="@smoke or "regression" (cmd line to run test  )
+
+Background:
+A Background allows you to add some context to the scenarios that follow it. It can contain one or more Given steps, which are run before each scenario, but after any Before hooks.
+
+Hooks: not part of feature file ; written in step definition file ; setup teardown method
+@before /@beforestep
+@after /@afterstep
+multiple @before / @after allowed with order given
+m1(order=1)
+
+annonate tags with hooks
+@before("@smoke")
+
+scenario outline is for data driven testing
+
+And & But does not have annotations and use given/when then
