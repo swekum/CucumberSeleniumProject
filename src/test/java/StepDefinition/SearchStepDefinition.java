@@ -9,7 +9,8 @@ import io.cucumber.java.Scenario;
 import io.cucumber.java.en.Given;
 import io.cucumber.java.en.Then;
 import io.cucumber.java.en.When;
-import org.junit.jupiter.api.Assertions;
+import org.junit.Assert;
+
 
 import java.util.Iterator;
 import java.util.List;
@@ -66,6 +67,6 @@ public class SearchStepDefinition {
         System.out.println("product_with_name_should_be_displayed");
         search = new Search();
         String actual = search.displayProduct(product);
-        Assertions.assertEquals(productName , actual);
+        Assert.assertEquals(productName , actual);
     }
 }

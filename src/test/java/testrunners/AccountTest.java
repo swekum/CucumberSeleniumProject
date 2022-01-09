@@ -8,12 +8,13 @@ import org.junit.runner.RunWith;
 @RunWith(Cucumber.class)
 @CucumberOptions (
         publish = true,
-        features = {"src/test/resources/com.features/LoginPage.feature"},
+        features = {"src/test/resources/com.features/AccountsPage.feature"
+                    },
         glue = {"StepDefinition" , "AppHooks"},
         plugin = {"pretty",
         "json:target/MyReports/report.json",
         "junit:target/MyReports/report.xml",
-//        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:"
+//        "com.aventstack.extentreports.cucumber.adapter.ExtentCucumberAdapter:",
                 "timeline:test-output-thread/"},
 //        tags = "@smoke",
         monochrome = false,
@@ -21,5 +22,5 @@ import org.junit.runner.RunWith;
 
 )
 
-public class LoginTest {
+public class AccountTest {
 }

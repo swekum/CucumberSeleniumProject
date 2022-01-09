@@ -31,3 +31,5 @@ annonate tags with hooks
 scenario outline is for data driven testing
 
 And & But does not have annotations and use given/when then
+Junit supports execution at feature file level for BDD framework using maven failsafe plugin
+TestNG supports execution at scenario level

@@ -1,6 +1,6 @@
 package com.pages;
 
-import org.bouncycastle.crypto.agreement.srp.SRP6Client;
+
 import org.openqa.selenium.By;
 import org.openqa.selenium.WebDriver;
 
@@ -38,11 +38,11 @@ public class LoginPage {
         driver.findElement(signInButton).click();
     }
 
-//    public AccountsPage doLogin(String un, String pwd) {
-//        System.out.println("login with: " + un + " and " + pwd);
-//        driver.findElement(emailId).sendKeys(un);
-//        driver.findElement(password).sendKeys(pwd);
-//        driver.findElement(signInButton).click();
-//        return new AccountsPage(driver);
-//    }
+    public AccountsPage doLogin(String un, String pwd) {
+        System.out.println("login with: " + un + " and " + pwd);
+        driver.findElement(emailId).sendKeys(un);
+        driver.findElement(password).sendKeys(pwd);
+        driver.findElement(signInButton).click();
+        return new AccountsPage(driver);
+    }
 }

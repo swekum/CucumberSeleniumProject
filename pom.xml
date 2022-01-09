@@ -9,47 +9,48 @@
     <version>1.0-SNAPSHOT</version>
 
     <properties>
-        <maven.compiler.source>8</maven.compiler.source>
-        <maven.compiler.target>8</maven.compiler.target>
+
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <java.version>1.8</java.version>
-        <junit.version>4.13.2</junit.version>
-        <cucumber.version>7.2.1</cucumber.version>
-<!--        <maven.compiler.version>3.8.1</maven.compiler.version>-->
+        <junit.version>4.13.1</junit.version>
+        <cucumber.version>6.9.0</cucumber.version>
+        <maven.compiler.version>3.8.1</maven.compiler.version>
         <maven.surefire.version>2.22.2</maven.surefire.version>
+
     </properties>
-    <dependencyManagement>
-        <dependencies>
-            <dependency>
-                <groupId>org.junit</groupId>
-                <artifactId>junit-bom</artifactId>
-                <version>5.8.2</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-            <dependency>
-                <groupId>io.cucumber</groupId>
-                <artifactId>cucumber-bom</artifactId>
-                <version>7.2.1</version>
-                <type>pom</type>
-                <scope>import</scope>
-            </dependency>
-        </dependencies>
-    </dependencyManagement>
+
+    <repositories>
+        <repository>
+            <id>mulesoft-releases</id>
+            <name>MuleSoft Repository</name>
+            <url>https://repository-master.mulesoft.org/releases/</url>
+            <layout>default</layout>
+        </repository>
+        <repository>
+            <id>mulesoft-snapshots</id>
+            <name>MuleSoft Snapshot Repository</name>
+            <url>https://repository-master.mulesoft.org/snapshots/</url>
+            <layout>default</layout>
+        </repository>
+    </repositories>
 
     <dependencies>
+
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-java</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>io.cucumber</groupId>
             <artifactId>cucumber-junit</artifactId>
             <version>${cucumber.version}</version>
             <scope>test</scope>
         </dependency>
+
         <dependency>
             <groupId>junit</groupId>
             <artifactId>junit</artifactId>
@@ -58,45 +59,51 @@
         </dependency>
 
         <dependency>
-            <groupId>io.cucumber</groupId>
-            <artifactId>cucumber-junit-platform-engine</artifactId>
-<!--            <version>${cucumber.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.platform</groupId>
-            <artifactId>junit-platform-suite</artifactId>
-<!--            <version>${junit.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
-            <groupId>org.junit.jupiter</groupId>
-            <artifactId>junit-jupiter</artifactId>
-<!--            <version>${junit.version}</version>-->
-            <scope>test</scope>
-        </dependency>
-
-        <dependency>
             <groupId>org.seleniumhq.selenium</groupId>
             <artifactId>selenium-java</artifactId>
-            <version>4.1.1</version>
+            <version>3.141.59</version>
         </dependency>
 
         <dependency>
             <groupId>io.github.bonigarcia</groupId>
             <artifactId>webdrivermanager</artifactId>
-            <version>5.0.3</version>
+            <version>4.2.2</version>
         </dependency>
 
         <dependency>
             <groupId>tech.grasshopper</groupId>
-            <artifactId>extentreports-cucumber7-adapter</artifactId>
-            <version>1.1.0</version>
+            <artifactId>extentreports-cucumber6-adapter</artifactId>
+            <version>2.8.4</version>
             <scope>test</scope>
         </dependency>
 
+        <dependency>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>6.14.3</version>
+            <scope>test</scope>
+        </dependency>
+
+        <dependency>
+            <groupId>io.cucumber</groupId>
+            <artifactId>cucumber-testng</artifactId>
+            <version>${cucumber.version}</version>
+            <scope>test</scope>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi</artifactId>
+            <version>4.1.2</version>
+        </dependency>
+
+        <!-- https://mvnrepository.com/artifact/org.apache.poi/poi-ooxml -->
+        <dependency>
+            <groupId>org.apache.poi</groupId>
+            <artifactId>poi-ooxml</artifactId>
+            <version>4.1.2</version>
+        </dependency>
 
 
 
@@ -104,10 +111,12 @@
 
     <build>
         <plugins>
+
+
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${maven.compiler.version}</version>
                 <configuration>
                     <encoding>UTF-8</encoding>
                     <source>${java.version}</source>
@@ -117,19 +126,52 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-surefire-plugin</artifactId>
-<!--                <version>${maven.surefire.version}</version>-->
-                <version>3.0.0-M5</version>
+                <version>${maven.surefire.version}</version>
                 <configuration>
-                    <properties>
-                        <!-- Work around. Surefire does not include enough
-                             information to disambiguate between different
-                             examples and scenarios. -->
-                        <configurationParameters>
-                            cucumber.junit-platform.naming-strategy=long
-                        </configurationParameters>
-                    </properties>
+                    <includes>
+                        <include>**/ParallelRun.java</include>
+                    </includes>
+                    <parallel>methods</parallel>
+<!--                    <threadCount>4</threadCount>-->
+                    <useUnlimitedThreads>true</useUnlimitedThreads>
                 </configuration>
             </plugin>
+
+<!--             <plugin>-->
+<!--                 <groupId>org.apache.maven.plugins</groupId>-->
+<!--                 <artifactId>maven-failsafe-plugin</artifactId>-->
+<!--                <version>3.0.0-M3</version>-->
+<!--                 <executions>-->
+<!--                     <execution>-->
+<!--                         <goals>-->
+<!--                             <goal>integration-test</goal>-->
+<!--                         </goals>-->
+<!--                         <configuration>-->
+<!--&lt;!&ndash;                             UNCOMMENT - To add any exclusions if required&ndash;&gt;-->
+<!--&lt;!&ndash;                             <excludes>&ndash;&gt;-->
+<!--&lt;!&ndash;                                 <exclude>**/*IT*.java</exclude>&ndash;&gt;-->
+<!--&lt;!&ndash;                             </excludes>&ndash;&gt;-->
+<!--                             <includes>-->
+<!--&lt;!&ndash;                                 UNCOMMENT BELOW LINE - To execute feature files with a single runner&ndash;&gt;-->
+<!--                                 <include>**/TestRunner.java</include>-->
+<!--&lt;!&ndash;                UNCOMMENT BELOW LINE - To execute feature files with multiple runners&ndash;&gt;-->
+<!--&lt;!&ndash;                                 <include>**/*Runner.java</include>&ndash;&gt;-->
+<!--                             </includes>-->
+<!--&lt;!&ndash;                             UNCOMMENT BELOW 3 LINES - To execute using parallel or combination&ndash;&gt;-->
+<!--&lt;!&ndash;                             option &ndash;&gt;-->
+<!--                             <parallel>methods</parallel>-->
+<!--                             <threadCount>4</threadCount>-->
+<!--                             <perCoreThreadCount>true</perCoreThreadCount>-->
+<!--&lt;!&ndash;                UNCOMMENT BELOW 3 LINES - To execute using forking or combination option&ndash;&gt;-->
+<!--&lt;!&ndash;                             <forkCount>2</forkCount>&ndash;&gt;-->
+<!--&lt;!&ndash;                             <reuseForks>true</reuseForks>&ndash;&gt;-->
+<!--&lt;!&ndash;                             <reportsDirectory>${project.build.directory}/failsafe-reports_${surefire.forkNumber}</reportsDirectory>&ndash;&gt;-->
+<!--                </configuration>-->
+<!--                     </execution>-->
+<!--                 </executions>-->
+<!--             </plugin>-->
+
+
         </plugins>
     </build>
 
